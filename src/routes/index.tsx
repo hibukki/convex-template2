@@ -1,39 +1,46 @@
 import { createFileRoute } from '@tanstack/react-router'
-import logo from '../logo.svg'
+import { useQuery } from 'convex/react'
+import { api } from '../../convex/_generated/api'
+import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card'
+import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar'
 
 export const Route = createFileRoute('/')({
-  component: App,
+  component: HomePage,
 })
 
-function App() {
+function HomePage() {
+  const profiles = useQuery(api.profiles.listProfiles)
+
   return (
-    <div className="text-center">
-      <header className="min-h-screen flex flex-col items-center justify-center bg-[#282c34] text-white text-[calc(10px+2vmin)]">
-        <img
-          src={logo}
-          className="h-[40vmin] pointer-events-none animate-[spin_20s_linear_infinite]"
-          alt="logo"
-        />
-        <p>
-          Edit <code>src/routes/index.tsx</code> and save to reload.
-        </p>
-        <a
-          className="text-[#61dafb] hover:underline"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-        <a
-          className="text-[#61dafb] hover:underline"
-          href="https://tanstack.com"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn TanStack
-        </a>
-      </header>
+    <div className="container mx-auto p-6">
+      <h1 className="text-3xl font-bold mb-6">Browse Profiles</h1>
+
+      {profiles === undefined ? (
+        <p className="text-muted-foreground">Loading...</p>
+      ) : profiles.length === 0 ? (
+        <p className="text-muted-foreground">No profiles yet. Be the first to create one!</p>
+      ) : (
+        <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-3">
+          {profiles.map((profile) => (
+            <Card key={profile._id}>
+              <CardHeader className="flex flex-row items-center gap-4">
+                <Avatar>
+                  <AvatarImage src={profile.user?.imageUrl} />
+                  <AvatarFallback>
+                    {profile.displayName.slice(0, 2).toUpperCase()}
+                  </AvatarFallback>
+                </Avatar>
+                <CardTitle>{profile.displayName}</CardTitle>
+              </CardHeader>
+              {profile.bio && (
+                <CardContent>
+                  <p className="text-muted-foreground">{profile.bio}</p>
+                </CardContent>
+              )}
+            </Card>
+          ))}
+        </div>
+      )}
     </div>
   )
 }

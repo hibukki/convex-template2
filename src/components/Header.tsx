@@ -1,30 +1,39 @@
 import { Link } from '@tanstack/react-router'
+import { SignInButton, UserButton } from '@clerk/clerk-react'
+import { Authenticated, Unauthenticated } from 'convex/react'
 
 import { useState } from 'react'
-import { Home, Menu, X } from 'lucide-react'
+import { Home, Menu, User, X } from 'lucide-react'
+import { Button } from './ui/button'
 
 export default function Header() {
   const [isOpen, setIsOpen] = useState(false)
 
   return (
     <>
-      <header className="p-4 flex items-center bg-gray-800 text-white shadow-lg">
-        <button
-          onClick={() => setIsOpen(true)}
-          className="p-2 hover:bg-gray-700 rounded-lg transition-colors"
-          aria-label="Open menu"
-        >
-          <Menu size={24} />
-        </button>
-        <h1 className="ml-4 text-xl font-semibold">
-          <Link to="/">
-            <img
-              src="/tanstack-word-logo-white.svg"
-              alt="TanStack Logo"
-              className="h-10"
-            />
-          </Link>
-        </h1>
+      <header className="p-4 flex items-center justify-between bg-gray-800 text-white shadow-lg">
+        <div className="flex items-center">
+          <button
+            onClick={() => setIsOpen(true)}
+            className="p-2 hover:bg-gray-700 rounded-lg transition-colors"
+            aria-label="Open menu"
+          >
+            <Menu size={24} />
+          </button>
+          <h1 className="ml-4 text-xl font-semibold">
+            <Link to="/">Profiles App</Link>
+          </h1>
+        </div>
+        <div className="flex items-center gap-4">
+          <Authenticated>
+            <UserButton />
+          </Authenticated>
+          <Unauthenticated>
+            <SignInButton mode="modal">
+              <Button variant="secondary" size="sm">Sign In</Button>
+            </SignInButton>
+          </Unauthenticated>
+        </div>
       </header>
 
       <aside
@@ -56,10 +65,18 @@ export default function Header() {
             <Home size={20} />
             <span className="font-medium">Home</span>
           </Link>
-
-          {/* Demo Links Start */}
-
-          {/* Demo Links End */}
+          <Link
+            to="/profile"
+            onClick={() => setIsOpen(false)}
+            className="flex items-center gap-3 p-3 rounded-lg hover:bg-gray-800 transition-colors mb-2"
+            activeProps={{
+              className:
+                'flex items-center gap-3 p-3 rounded-lg bg-cyan-600 hover:bg-cyan-700 transition-colors mb-2',
+            }}
+          >
+            <User size={20} />
+            <span className="font-medium">My Profile</span>
+          </Link>
         </nav>
       </aside>
     </>

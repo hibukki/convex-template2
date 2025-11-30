@@ -4,6 +4,7 @@ import { RouterProvider, createRouter } from '@tanstack/react-router'
 import { ClerkProvider, useAuth } from '@clerk/clerk-react'
 import { ConvexProviderWithClerk } from 'convex/react-clerk'
 import { ConvexReactClient } from 'convex/react'
+import { ErrorBoundary } from './components/ErrorBoundary'
 
 // Import the generated route tree
 import { routeTree } from './routeTree.gen'
@@ -36,11 +37,13 @@ if (rootElement && !rootElement.innerHTML) {
   const root = ReactDOM.createRoot(rootElement)
   root.render(
     <StrictMode>
-      <ClerkProvider publishableKey={clerkPublishableKey}>
-        <ConvexProviderWithClerk client={convex} useAuth={useAuth}>
-          <RouterProvider router={router} />
-        </ConvexProviderWithClerk>
-      </ClerkProvider>
+      <ErrorBoundary>
+        <ClerkProvider publishableKey={clerkPublishableKey}>
+          <ConvexProviderWithClerk client={convex} useAuth={useAuth}>
+            <RouterProvider router={router} />
+          </ConvexProviderWithClerk>
+        </ClerkProvider>
+      </ErrorBoundary>
     </StrictMode>,
   )
 }

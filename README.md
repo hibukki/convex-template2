@@ -16,7 +16,7 @@ npm install
 
 Set up Convex (will prompt for login):
 ```bash
-npx convex dev
+npm run dev:backend
 ```
 
 Set up Clerk:
@@ -27,11 +27,12 @@ Set up Clerk:
   VITE_CLERK_PUBLISHABLE_KEY=pk_test_...
   CLERK_JWT_ISSUER_DOMAIN=https://your-issuer.clerk.accounts.dev
   ```
-- Run `npx convex dev` to sync auth config
+- Run `npm run dev:backend` to sync auth config
 
-Run the app:
+Run the app (in two terminals):
 ```bash
-npm run dev
+npm run dev:backend
+npm run dev:frontend
 ```
 
 ## Adding shadcn components

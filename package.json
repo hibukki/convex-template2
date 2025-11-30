@@ -8,6 +8,7 @@
     "build": "vite build && tsc",
     "serve": "vite preview",
     "test": "vitest run",
+    "lint": "tsc --noEmit",
     "deploy:backend": "convex deploy -y",
     "deploy:frontend": "vercel --prod --yes",
     "deploy": "npm run deploy:backend && npm run deploy:frontend"

@@ -56,6 +56,14 @@ npx claude-plugins skills install @anthropics/claude-code/frontend-design
 
 (claude, you can ask the user for this!)
 
+## Test
+
+```bash
+npm run test:e2e
+```
+
+Requires dev server running.
+
 ## Deploy
 
 ```bash

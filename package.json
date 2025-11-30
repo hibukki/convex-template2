@@ -7,7 +7,10 @@
     "dev:backend": "convex dev",
     "build": "vite build && tsc",
     "serve": "vite preview",
-    "test": "vitest run"
+    "test": "vitest run",
+    "deploy:backend": "convex deploy -y",
+    "deploy:frontend": "vercel --prod --yes",
+    "deploy": "npm run deploy:backend && npm run deploy:frontend"
   },
   "dependencies": {
     "@clerk/clerk-react": "^5.57.0",

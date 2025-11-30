@@ -1,7 +1,9 @@
 import { StrictMode } from 'react'
 import ReactDOM from 'react-dom/client'
 import { RouterProvider, createRouter } from '@tanstack/react-router'
-import { ConvexProvider, ConvexReactClient } from 'convex/react'
+import { ClerkProvider, useAuth } from '@clerk/clerk-react'
+import { ConvexProviderWithClerk } from 'convex/react-clerk'
+import { ConvexReactClient } from 'convex/react'
 
 // Import the generated route tree
 import { routeTree } from './routeTree.gen'
@@ -9,6 +11,7 @@ import { routeTree } from './routeTree.gen'
 import './styles.css'
 
 const convex = new ConvexReactClient(import.meta.env.VITE_CONVEX_URL as string)
+const clerkPublishableKey = import.meta.env.VITE_CLERK_PUBLISHABLE_KEY as string
 import reportWebVitals from './reportWebVitals.ts'
 
 // Create a new router instance
@@ -34,9 +37,11 @@ if (rootElement && !rootElement.innerHTML) {
   const root = ReactDOM.createRoot(rootElement)
   root.render(
     <StrictMode>
-      <ConvexProvider client={convex}>
-        <RouterProvider router={router} />
-      </ConvexProvider>
+      <ClerkProvider publishableKey={clerkPublishableKey}>
+        <ConvexProviderWithClerk client={convex} useAuth={useAuth}>
+          <RouterProvider router={router} />
+        </ConvexProviderWithClerk>
+      </ClerkProvider>
     </StrictMode>,
   )
 }

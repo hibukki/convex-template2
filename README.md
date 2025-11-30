@@ -43,7 +43,13 @@ npx shadcn@latest add [component-name]
 
 ## Deploy
 
+Backend:
 ```bash
-npm run build
 npx convex deploy
+```
+
+Frontend (using [Vercel](https://vercel.com)):
+```bash
+npm i -g vercel
+vercel
 ```

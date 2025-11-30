@@ -12,7 +12,8 @@
     "lint": "tsc --noEmit",
     "deploy:backend": "convex deploy -y",
     "deploy:frontend": "vercel --prod --yes",
-    "deploy": "npm run deploy:backend && npm run deploy:frontend"
+    "deploy": "npm run deploy:backend && npm run deploy:frontend",
+    "prepare": "husky"
   },
   "dependencies": {
     "@clerk/clerk-react": "^5.57.0",
@@ -42,10 +43,15 @@
     "@types/react": "^19.2.0",
     "@types/react-dom": "^19.2.0",
     "@vitejs/plugin-react": "^5.0.4",
+    "husky": "^9.1.7",
     "jsdom": "^27.0.0",
+    "lint-staged": "^16.2.7",
     "typescript": "^5.7.2",
     "vite": "^7.1.7",
     "vitest": "^3.0.5",
     "web-vitals": "^5.1.0"
+  },
+  "lint-staged": {
+    "*.{ts,tsx}": "bash -c 'npm run lint'"
   }
 }
